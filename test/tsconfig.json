@@ -12,6 +12,7 @@
     "alwaysStrict": true,
     "sourceMap": true,
     "target": "es2015",
+    "lib": ["es2017"],
     "outDir": "../build"
   },
   "include": [
