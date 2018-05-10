@@ -38,10 +38,10 @@ function makeDescription() {
   expression.`;
 }
 
-function doAction({ pattern, config }: { pattern: string | null, config: string | null }, action: CommandHandler, extraOptions: any) {
+async function doAction({ pattern, config }: { pattern: string | null, config: string | null }, action: CommandHandler, extraOptions: any) {
   try {
     const instances = parseConfig(pattern, config);
-    action(instances, extraOptions);
+    await action(instances, extraOptions);
   } catch (e) {
     console.error(chalk.red(e.stack));
     process.exit(-1);
