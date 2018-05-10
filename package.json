@@ -8,7 +8,8 @@
     "start": "node lib/index.js",
     "build": "cd src && tsc",
     "build-test": "cd test && tsc",
-    "test": "jasmine build/test/*.js"
+    "test": "jasmine --config=jasmine.json",
+    "test-debug": "node --inspect-brk ./node_modules/.bin/jasmine --config=jasmine.json"
   },
   "keywords": [
     "redis",
@@ -30,10 +31,12 @@
     "@types/js-yaml": "^3.11.1",
     "@types/minimatch": "^3.0.3",
     "@types/node": "^10.0.6",
+    "@types/proxyquire": "^1.3.28",
     "@types/redis": "^2.6.0",
     "jasmine": "^3.1.0",
     "jasmine-core": "^3.1.0",
     "jasmine-reporters": "^2.3.1",
+    "proxyquire": "^2.0.1",
     "tslint": "^5.10.0",
     "typescript": "^2.8.3"
   }
