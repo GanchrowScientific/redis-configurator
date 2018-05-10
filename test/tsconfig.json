@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "importHelpers": true,
+    "declaration": true,
+    "alwaysStrict": true,
+    "sourceMap": true,
+    "target": "es2015",
+    "outDir": "../build"
+  },
+  "include": [
+    "../src/**/*.ts",
+    "**/*"
+  ],
+  "exclude": [
+    "*.json"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "redis-configurator",
+  "version": "0.0.1",
+  "description": "A command line utility to configure multiple redis instances together.",
+  "repository": "https://github.com/GanchrowScientific/redis-configurator",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node lib/index.js",
+    "build": "cd src && tsc",
+    "build-test": "cd test && tsc",
+    "test": "jasmine build/test/*.js"
+  },
+  "keywords": [
+    "redis",
+    "configuration"
+  ],
+  "author": "andrew.eisenberg@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "commander": "^2.15.1",
+    "js-yaml": "^3.11.0",
+    "redis": "^2.8.0",
+    "source-map-support": "^0.5.5"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/jasmine": "^2.8.7",
+    "@types/node": "^10.0.6",
+    "@types/redis": "^2.6.0",
+    "jasmine": "^3.1.0",
+    "jasmine-core": "^3.1.0",
+    "jasmine-reporters": "^2.3.1",
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.3"
+  }
+}
