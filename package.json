@@ -5,9 +5,9 @@
   "repository": "https://github.com/GanchrowScientific/redis-configurator",
   "main": "lib/index.js",
   "scripts": {
-    "start": "node lib/index.js",
-    "build": "cd src && tsc",
-    "build-test": "cd test && tsc",
+    "start": "redis-configurator.js",
+    "build": "cd src && tslint --project . && tsc",
+    "build-test": "cd test && tslint --project . && tsc",
     "test": "jasmine --config=jasmine.json",
     "test-debug": "node --inspect-brk ./node_modules/.bin/jasmine --config=jasmine.json"
   },
@@ -15,6 +15,9 @@
     "redis",
     "configuration"
   ],
+  "bin": {
+    "redis-configurator": "./redis-configurator.js"
+  },
   "author": "andrew.eisenberg@gmail.com",
   "license": "MIT",
   "dependencies": {
@@ -39,5 +42,8 @@
     "proxyquire": "^2.0.1",
     "tslint": "^5.10.0",
     "typescript": "^2.8.3"
+  },
+  "engines": {
+    "node": ">=7.0"
   }
 }

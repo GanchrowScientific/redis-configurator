@@ -5,7 +5,7 @@ import { RedisClient } from 'redis';
 import { RedisClients, RedisInstance, RedisInstances } from './interfaces';
 
 export function iterateClients(clients: RedisClients, instances: RedisInstances,
-                             cb: (instance: RedisInstance, client: RedisClient) => void) {
+                               cb: (instance: RedisInstance, client: RedisClient) => void) {
 
   // ensure sort matches the config file
   Object.entries(clients).sort(([l1], [l2]) =>
