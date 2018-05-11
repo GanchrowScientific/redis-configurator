@@ -1,10 +1,12 @@
 'use strict';
 
 import { default as chalk } from 'chalk';
+import { RedisClient } from 'redis';
 
 import { connectInstances } from '../connectInstances';
 import { endClients } from '../endClients';
-import { RedisClients, RedisInstances } from '../interfaces';
+import { RedisInstance, RedisInstances } from '../interfaces';
+import { iterateClients } from '../iterateClients';
 import { printErrors } from '../printErrors';
 
 export async function listHandler(instances: RedisInstances, extraOptions: any): Promise<void> {
@@ -12,23 +14,17 @@ export async function listHandler(instances: RedisInstances, extraOptions: any):
   const { clients, errors } = await connectInstances(instances);
 
   printErrors(errors);
-  printClients(clients, instances);
+  iterateClients(clients, instances, listClient);
 
   endClients(clients);
 }
 
-function printClients(clients: RedisClients, instances: RedisInstances) {
-  Object.entries(clients).sort(([l1], [l2]) =>
-    instances[l1].index - instances[l2].index)
-  .forEach(([label, client]) => {
-    const instance = instances[label];
+function listClient(instance: RedisInstance, client: RedisClient) {
+  console.log(chalk.black(chalk.bgGreen('>>>')), chalk.blue(instance.label),
+    client.connected ? chalk.green('Connected') : chalk.red('Not Connected'));
+  console.log('   ', `${instance.host}:${instance.port}`);
 
-    console.log(chalk.black(chalk.bgGreen('>>>')), chalk.blue(label),
-      client.connected ? chalk.green('Connected') : chalk.red('Not Connected'));
-    console.log('   ', `${instance.host}:${instance.port}`);
-
-    if (instance.description) {
-      console.log('   ', instance.description);
-    }
-  });
+  if (instance.description) {
+    console.log('   ', instance.description);
+  }
 }
