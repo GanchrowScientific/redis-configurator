@@ -7,6 +7,7 @@ import { connectInstances } from '../connectInstances';
 import { endClients } from '../endClients';
 import { RedisInstance, RedisInstances } from '../interfaces';
 import { iterateClients } from '../iterateClients';
+import { printClient } from '../printClient';
 import { printErrors } from '../printErrors';
 
 export async function listHandler(instances: RedisInstances, extraOptions: any): Promise<void> {
@@ -14,14 +15,13 @@ export async function listHandler(instances: RedisInstances, extraOptions: any):
   const { clients, errors } = await connectInstances(instances);
 
   printErrors(errors);
-  iterateClients(clients, instances, listClient);
+  await iterateClients(clients, instances, listClient);
 
   endClients(clients);
 }
 
-function listClient(instance: RedisInstance, client: RedisClient) {
-  console.log(chalk.black(chalk.bgGreen('>>>')), chalk.blue(instance.label),
-    client.connected ? chalk.green('Connected') : chalk.red('Not Connected'));
+async function listClient(instance: RedisInstance, client: RedisClient) {
+  printClient(instance, client);
   console.log('   ', `${instance.host}:${instance.port}`);
 
   if (instance.description) {

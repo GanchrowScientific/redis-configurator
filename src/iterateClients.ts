@@ -4,11 +4,12 @@ import { RedisClient } from 'redis';
 
 import { RedisClients, RedisInstance, RedisInstances } from './interfaces';
 
-export function iterateClients(clients: RedisClients, instances: RedisInstances,
-                               cb: (instance: RedisInstance, client: RedisClient) => void) {
+export async function iterateClients(
+  clients: RedisClients, instances: RedisInstances,
+  cb: (instance: RedisInstance, client: RedisClient) => Promise<void>) {
 
   // ensure sort matches the config file
-  Object.entries(clients).sort(([l1], [l2]) =>
+  return Promise.all(Object.entries(clients).sort(([l1], [l2]) =>
     instances[l1].index - instances[l2].index)
-  .forEach(([label, client]) => cb(instances[label], client));
+    .map(async ([label, client]) => await cb(instances[label], client)));
 }

@@ -5,6 +5,8 @@ import 'source-map-support/register';
 import { default as chalk } from 'chalk';
 import * as program from 'commander';
 
+import { configHandler } from './actions/config';
+import { infoHandler } from './actions/info';
 import { listHandler } from './actions/list';
 import { parseConfig } from './configParser';
 import { CommandHandler } from './interfaces';
@@ -23,6 +25,24 @@ program
   .description('list managed redis instances and their current statuses')
   .action(command => {
     doAction(command.parent, listHandler, {});
+   });
+
+program
+  .command('info [section]')
+  .description('get info on managed redis instances')
+  .action((section, command) => {
+    doAction(command.parent, infoHandler, {
+      section
+    });
+   });
+
+program
+  .command('config [pattern]')
+  .description('get configuration on managed redis instances')
+  .action((pattern, command) => {
+    doAction(command.parent, configHandler, {
+      pattern
+    });
    });
 
 program
