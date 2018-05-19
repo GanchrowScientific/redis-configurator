@@ -10,7 +10,7 @@ import { iterateClients } from '../iterateClients';
 import { printClient } from '../printClient';
 import { printErrors } from '../printErrors';
 
-export async function listHandler(instances: RedisInstances, extraOptions: any): Promise<void> {
+export async function listHandler(instances: RedisInstances, extraOptions: { }): Promise<void> {
   console.log(chalk.blue('Listing Redis Clients'));
   const { clients, errors } = await connectInstances(instances);
 

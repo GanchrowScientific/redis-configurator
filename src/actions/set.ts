@@ -11,29 +11,30 @@ import { iterateClients } from '../iterateClients';
 import { printClient } from '../printClient';
 import { printErrors } from '../printErrors';
 
-export async function configHandler(instances: RedisInstances, { pattern }: { pattern: string | null }): Promise<void> {
+export async function setHandler(instances: RedisInstances,
+  { key, value, rewrite }: { key: string, value: string | number, rewrite: boolean }): Promise<void> {
+
   console.log(chalk.blue('Configuration in Redis Clients'));
   const { clients, errors } = await connectInstances(instances);
 
   printErrors(errors);
-  await iterateClients(clients, instances, configGetClient.bind(null, pattern));
+  await iterateClients(clients, instances, configSetClient.bind(null, key, value, rewrite));
 
   endClients(clients);
 }
 
-async function configGetClient(pattern: (string | null), instance: RedisInstance, client: RedisClient) {
+async function configSetClient(key: string, value: string | number, rewrite: boolean,
+  instance: RedisInstance, client: RedisClient) {
   if (client.connected) {
-    const info = await promisify(client.config).call(client, 'get', pattern || '*');
+    const setResult = await promisify(client.config).call(client, 'set', key, value);
+    if (rewrite) {
+      await promisify(client.config).call(client, 'rewrite');
+    }
 
     printClient(instance, client);
-    printList(info);
+    console.log('  ', chalk.yellow(setResult));
   } else {
     printClient(instance, client);
-  }
-}
-
-function printList(list: string[]) {
-  for (let i = 0; i < list.length; i += 2) {
-    console.log('  ', chalk.yellow(list[i]), ':', list[i + 1]);
+    console.log('  ', chalk.yellow('NOT CONNECTED'));
   }
 }

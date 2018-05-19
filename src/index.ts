@@ -8,8 +8,13 @@ import * as program from 'commander';
 import { configHandler } from './actions/config';
 import { infoHandler } from './actions/info';
 import { listHandler } from './actions/list';
+import { masterHandler } from './actions/master';
+import { setHandler } from './actions/set';
 import { parseConfig } from './configParser';
 import { CommandHandler } from './interfaces';
+
+// try
+// https://github.com/klauscfhq/signale
 
 // tslint:disable-next-line
 const packageJson = require('../package.json');
@@ -46,6 +51,27 @@ program
    });
 
 program
+  .command('set <key> <value>')
+  .option('-r, --rewrite', 'rewrites configuration to disk after setting value')
+  .description('get configuration on managed redis instances')
+  .action((key, value, command) => {
+    doAction(command.parent, setHandler, {
+      key, value, rewrite: command.rewrite
+    });
+  });
+
+program
+  .command('master [master]')
+  .description('sets all slaves matching the -p pattern to have the specified master;' +
+    ' a -p pattern must be specified; leave [master] blank to convert master to "no one"')
+  .option('-r, --rewrite', 'rewrites configuration to disk after setting value')
+  .action((master, command) => {
+    doAction(command.parent, masterHandler, {
+      rewrite: command.rewrite
+    }, master);
+  });
+
+program
   .parse(process.argv);
 
 function makeDescription() {
@@ -58,12 +84,30 @@ function makeDescription() {
   expression.`;
 }
 
-async function doAction({ pattern, config }: { pattern: string | null, config: string | null }, action: CommandHandler, extraOptions: any) {
+async function doAction(
+  { pattern, config }: { pattern: string | undefined, config: string | undefined },
+  action: CommandHandler, extraOptions: any, extraRedis?: string) {
+
   try {
     const instances = parseConfig(pattern, config);
-    await action(instances, extraOptions);
+    const extraInstance = getExtraRedisInstance(extraRedis, config);
+
+    await action(instances, extraOptions, extraInstance);
   } catch (e) {
     console.error(chalk.red(e.stack));
     process.exit(-1);
   }
+}
+
+function getExtraRedisInstance(extraRedis: string | undefined, config: string | undefined) {
+  if (!extraRedis) {
+    return;
+  }
+  const extraInstance = parseConfig(extraRedis, config);
+  if (!Object.keys(extraInstance)) {
+    throw new Error(`Cannot find redis instance ${extraInstance}`);
+  } else if (Object.keys(extraInstance).length > 1) {
+    throw new Error(`${extraInstance} matches more than one redis`);
+  }
+  return Object.values(extraInstance)[0];
 }

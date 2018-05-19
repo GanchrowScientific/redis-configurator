@@ -1,6 +1,7 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "align": false,
     "arrow-parens": false,
     "interface-name": false,
     "class-name": true,
@@ -10,7 +11,7 @@
     "forin": true,
     "indent": [true, "spaces", 2],
     "label-position": true,
-    "max-line-length": [true, 140],
+    "max-line-length": [true, 120],
     "member-access": true,
     "member-ordering": [true,
       "public-before-private",

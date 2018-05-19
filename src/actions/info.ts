@@ -11,12 +11,12 @@ import { iterateClients } from '../iterateClients';
 import { printClient } from '../printClient';
 import { printErrors } from '../printErrors';
 
-export async function infoHandler(instances: RedisInstances, extraOptions: any): Promise<void> {
+export async function infoHandler(instances: RedisInstances, { section }: { section: string | null }): Promise<void> {
   console.log(chalk.blue('Info on Redis Clients'));
   const { clients, errors } = await connectInstances(instances);
 
   printErrors(errors);
-  await iterateClients(clients, instances, infoClient.bind(null, extraOptions.section));
+  await iterateClients(clients, instances, infoClient.bind(null, section));
 
   endClients(clients);
 }

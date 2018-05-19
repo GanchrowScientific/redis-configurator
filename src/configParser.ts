@@ -7,7 +7,7 @@ import * as minimatch from 'minimatch';
 import { locateConfig } from './configLocator';
 import { RawConfig, RedisInstances } from './interfaces';
 
-export function parseConfig(pattern: string | null, configOverride: string | null): RedisInstances {
+export function parseConfig(pattern: string | undefined, configOverride: string | undefined): RedisInstances {
   const configFile = locateConfig(configOverride);
   const config = yaml.load(fs.readFileSync(configFile, 'utf8')) as RawConfig;
 

@@ -2,13 +2,13 @@
 - label: Local-1
   port: 6379
   host: localhost
-  auth: hucairz
+  auth_pass: hucairz
   desc: This is the first
   config: /etc/redis/6379.conf
 
 - label: Local-2
   port: 6380
   host: localhost
-  auth: hucairz
+  auth_pass: hucairz
   desc: This is the second
   config: /etc/redis/6380.conf

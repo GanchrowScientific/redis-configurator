@@ -17,7 +17,7 @@ import * as path from 'path';
 const FILENAME = 'redis-configurator.yaml';
 const DOT_FILENAME = '.redis-configurator';
 
-export function locateConfig(configOverride: string | null): string {
+export function locateConfig(configOverride: string | undefined): string {
   if (configOverride) {
     if (!fs.existsSync(configOverride)) {
       throw new Error(`${configOverride} not found.`);

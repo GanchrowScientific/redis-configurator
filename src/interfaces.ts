@@ -7,7 +7,7 @@ export interface RedisInstance {
   index: number;
   port?: number;
   host?: string;
-  auth?: string;
+  auth_pass?: string;
   description?: string;
   config?: string;
 }
@@ -18,4 +18,4 @@ export type RedisInstances = Record<string, RedisInstance>;
 export type RedisClients = Record<string, RedisClient>;
 export type RedisErrors = Record<string, Error>;
 
-export type CommandHandler = (instances: RedisInstances, extraOptions: any) => Promise<void>;
+export type CommandHandler = (instances: RedisInstances, extraOptions: any, extraInstance?: RedisInstance) => Promise<void>;
