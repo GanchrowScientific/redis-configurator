@@ -2,11 +2,11 @@
 
 import { default as chalk } from 'chalk';
 import { RedisClient } from 'redis';
-import { promisify } from 'util';
 
 import { connectInstances } from '../connectInstances';
 import { endClients } from '../endClients';
 import { RedisInstance, RedisInstances } from '../interfaces';
+import { invokeRedis } from '../invokeRedis';
 import { iterateClients } from '../iterateClients';
 import { printClient } from '../printClient';
 import { printErrors } from '../printErrors';
@@ -15,11 +15,11 @@ export async function masterHandler(instances: RedisInstances,
   { rewrite }: { rewrite: boolean },
   masterInstance?: RedisInstance): Promise<void> {
 
-  console.log(chalk.blue('Configuration in Redis Clients'));
+  const { masterHostPort, masterAuth, masterLabel } = getMasterHostPort(masterInstance);
+
+  console.log(chalk.blue(`Setting master to ${masterHostPort}`));
 
   const { clients, errors } = await connectInstances(instances);
-
-  const { masterHostPort, masterAuth, masterLabel } = getMasterHostPort(masterInstance);
 
   printErrors(errors);
   await iterateClients(clients, instances, setMaster.bind(null, masterLabel, masterHostPort, masterAuth, rewrite));
@@ -37,13 +37,13 @@ async function setMaster(masterLabel: string | undefined, masterHostPort: string
 
   if (client.connected) {
     if (masterAuth) {
-      await promisify(client.config).call(client, 'set', 'masterauth', masterAuth);
+      await invokeRedis(client, 'config', 'set', 'masterauth', masterAuth);
     }
 
-    const masterResult = await promisify(client.slaveof).call(client, ...masterHostPort);
+    const masterResult = await invokeRedis(client, 'slaveof', ...masterHostPort);
 
     if (rewrite) {
-      await promisify(client.config).call(client, 'rewrite');
+      await invokeRedis(client, 'config', 'rewrite');
     }
     printClient(instance, client);
     console.log('  ', chalk.yellow(masterResult));

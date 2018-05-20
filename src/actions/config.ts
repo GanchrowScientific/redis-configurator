@@ -2,11 +2,11 @@
 
 import { default as chalk } from 'chalk';
 import { RedisClient } from 'redis';
-import { promisify } from 'util';
 
 import { connectInstances } from '../connectInstances';
 import { endClients } from '../endClients';
 import { RedisInstance, RedisInstances } from '../interfaces';
+import { invokeRedis } from '../invokeRedis';
 import { iterateClients } from '../iterateClients';
 import { printClient } from '../printClient';
 import { printErrors } from '../printErrors';
@@ -23,7 +23,7 @@ export async function configHandler(instances: RedisInstances, { pattern }: { pa
 
 async function configGetClient(pattern: (string | null), instance: RedisInstance, client: RedisClient) {
   if (client.connected) {
-    const info = await promisify(client.config).call(client, 'get', pattern || '*');
+    const info = await invokeRedis(client, 'config', 'get', pattern || '*');
 
     printClient(instance, client);
     printList(info);
