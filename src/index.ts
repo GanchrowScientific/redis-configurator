@@ -72,6 +72,16 @@ program
   });
 
 program
+  .command('restart')
+  .description('restarts all redis instances matched by the pattern')
+  .option('-n, --no-save', 'avoid saving before restarting')
+  .action(command => {
+    doAction(command.parent, restartHandler, {
+      noSave: command.noSave
+    });
+  });
+
+program
   .parse(process.argv);
 
 function makeDescription() {
