@@ -1,15 +1,17 @@
 {
   "name": "redis-configurator",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A command line utility to configure multiple redis instances together.",
   "repository": "https://github.com/GanchrowScientific/redis-configurator",
   "main": "lib/index.js",
   "scripts": {
+    "clean": "rm -rf lib build",
     "start": "redis-configurator.js",
     "build": "cd src && tslint --project . && tsc",
     "build-test": "cd test && tslint --project . && tsc",
     "test": "jasmine --config=jasmine.json",
-    "test-debug": "node --inspect-brk ./node_modules/.bin/jasmine --config=jasmine.json"
+    "test-debug": "node --inspect-brk ./node_modules/.bin/jasmine --config=jasmine.json",
+    "prepare": "npm run clean && npm run build && npm run build-test && npm test"
   },
   "keywords": [
     "redis",

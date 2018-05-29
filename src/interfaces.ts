@@ -18,4 +18,5 @@ export type RedisInstances = Record<string, RedisInstance>;
 export type RedisClients = Record<string, RedisClient>;
 export type RedisErrors = Record<string, Error>;
 
-export type CommandHandler = (instances: RedisInstances, extraOptions: any, extraInstance?: RedisInstance) => Promise<void>;
+export type CommandHandler = (instances: RedisInstances, extraOptions: any,
+  extraInstance?: RedisInstance) => Promise<void>;

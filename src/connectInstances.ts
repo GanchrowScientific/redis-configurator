@@ -4,7 +4,9 @@ import { RedisClient } from 'redis';
 
 import { RedisClients, RedisErrors, RedisInstance, RedisInstances } from './interfaces';
 
-export async function connectInstances(instances: RedisInstances): Promise<{ clients: RedisClients, errors: RedisErrors }> {
+export async function connectInstances(instances: RedisInstances):
+Promise<{ clients: RedisClients, errors: RedisErrors }> {
+
   const clientsArray = await Promise.all(Object.values(instances)
     .map(instance => createConnectedClient(instance)));
 
@@ -20,7 +22,8 @@ export async function connectInstances(instances: RedisInstances): Promise<{ cli
 
 }
 
-async function createConnectedClient(instance: RedisInstance): Promise<{ label: string, client?: RedisClient, error?: Error }> {
+async function createConnectedClient(instance: RedisInstance):
+Promise<{ label: string, client?: RedisClient, error?: Error }> {
   return new Promise<{ label: string, client?: RedisClient, error?: Error }>((resolve, reject) => {
     const client = new RedisClient(instance);
     client.on('ready', (error?: Error) => {

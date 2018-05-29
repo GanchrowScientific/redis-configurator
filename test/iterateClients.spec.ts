@@ -17,7 +17,8 @@ describe('iterateClients', () => {
     };
 
     const results: any[] = [];
-    iterateClients(clients as any, instances as any, (instance, client) => results.push([ instance, client ]));
+    iterateClients(clients as any, instances as any, async (instance, client) =>
+      (results.push([ instance, client ]), undefined));
 
     expect(results).toEqual([
       [ instances.a, clients.a ],
