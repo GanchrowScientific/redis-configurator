@@ -28,7 +28,8 @@
     "js-yaml": "^3.11.0",
     "minimatch": "^3.0.4",
     "redis": "^2.8.0",
-    "source-map-support": "^0.5.5"
+    "source-map-support": "^0.5.5",
+    "tslib": "^1.9.2"
   },
   "devDependencies": {
     "@types/commander": "^2.12.2",
