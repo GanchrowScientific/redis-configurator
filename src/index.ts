@@ -74,6 +74,10 @@ program
 program
   .parse(process.argv);
 
+if (!program.args.length) {
+  program.help();
+}
+
 function makeDescription() {
   return packageJson.description + `
   Use -c to specify a non-default configuration file. Default is to look in

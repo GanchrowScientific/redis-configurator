@@ -1,0 +1,66 @@
+
+# Ashley
+- label: staging-data
+  port: 7000
+  host: ashley
+  auth_pass: everywhere_you_look
+  desc: Prematch data redis on Ashley
+  config: /etc/redis/7000.conf
+
+- label: staging-mediator
+  port: 7102
+  host: ashley
+  auth_pass: everywhere_you_look
+  desc: Prematch mediator redis on Ashley
+  config: /etc/redis/7102.conf
+
+- label: staging-user
+  port: 7100
+  host: ashley
+  auth_pass: everywhere_you_look
+  desc: Prematch user management redis on Ashley
+  config: /etc/redis/7100.conf
+
+# Blake
+- label: prematch-data
+  port: 7000
+  host: blake
+  auth_pass: everywhere_you_look
+  desc: Prematch data redis on Blake
+  config: /etc/redis/7000.conf
+
+- label: prematch-mediator
+  port: 7102
+  host: blake
+  auth_pass: everywhere_you_look
+  desc: Prematch mediator redis on Blake
+  config: /etc/redis/7102.conf
+
+- label: prematch-user
+  port: 7100
+  host: blake
+  auth_pass: everywhere_you_look
+  desc: Prematch user management redis on Blake
+  config: /etc/redis/7100.conf
+
+# Dylan
+- label: live-data
+  port: 8000
+  host: dylan
+  auth_pass: everywhere_you_look
+  desc: Prematch data redis on Blake
+  config: /etc/redis/8000.conf
+
+- label: live-mediator
+  port: 8102
+  host: dylan
+  auth_pass: everywhere_you_look
+  desc: Prematch mediator redis on Blake
+  config: /etc/redis/8102.conf
+
+- label: live-user
+  port: 8100
+  host: dylan
+  auth_pass: everywhere_you_look
+  desc: Prematch user management redis on Blake
+  config: /etc/redis/8100.conf
