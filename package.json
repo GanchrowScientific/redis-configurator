@@ -1,6 +1,6 @@
 {
   "name": "redis-configurator",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A command line utility to configure multiple redis instances together.",
   "repository": "https://github.com/GanchrowScientific/redis-configurator",
   "main": "lib/index.js",
